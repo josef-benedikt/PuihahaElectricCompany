@@ -26,10 +26,10 @@ class Database extends Config
      */
     public array $default = [
     'DSN'          => '',
-    'hostname'     => env('database.default.hostname', 'localhost'),
-    'username'     => env('database.default.username', 'root'),
-    'password'     => env('database.default.password', ''),
-    'database'     => env('database.default.database', 'electriccompany'),
+    'hostname'     => env('database.default.hostname', env('DATABASE_DEFAULT_HOSTNAME', 'localhost')),
+    'username'     => env('database.default.username', env('DATABASE_DEFAULT_USERNAME', 'root')),
+    'password'     => env('database.default.password', env('DATABASE_DEFAULT_PASSWORD', '')),
+    'database'     => env('database.default.database', env('DATABASE_DEFAULT_DATABASE', 'electriccompany')),
     'DBDriver'     => env('database.default.DBDriver', 'MySQLi'),
     'DBPrefix'     => '',
     'pConnect'     => false,
@@ -41,7 +41,7 @@ class Database extends Config
     'compress'     => false,
     'strictOn'     => false,
     'failover'     => [],
-    'port'         => env('database.default.port', 3306),
+    'port'         => (int) env('database.default.port', env('DATABASE_DEFAULT_PORT', 3306)),
     'numberNative' => false,
     'dateFormat'   => [
         'date'     => 'Y-m-d',
