@@ -26,7 +26,7 @@ class Database extends Config
      */
     public array $default = [
         'DSN'          => '',
-        'hostname'     => 'localhost',
+        'hostname'     => '127.0.0.1',
         'username'     => 'root',
         'password'     => '',
         'database'     => 'electriccompany',
@@ -87,23 +87,27 @@ class Database extends Config
     {
         parent::__construct();
 
-        // Dynamically override values from environment variables at runtime
-        if ($hostname = env('database.default.hostname')) {
+        // Check CodeIgniter env(), $_ENV, or getenv() to support Render variables directly
+        $getEnvVar = static function (string $key) {
+            return env($key) ?? $_ENV[$key] ?? getenv($key) ?: null;
+        };
+
+        if ($hostname = $getEnvVar('database.default.hostname')) {
             $this->default['hostname'] = $hostname;
         }
-        if ($username = env('database.default.username')) {
+        if ($username = $getEnvVar('database.default.username')) {
             $this->default['username'] = $username;
         }
-        if ($password = env('database.default.password')) {
+        if ($password = $getEnvVar('database.default.password')) {
             $this->default['password'] = $password;
         }
-        if ($database = env('database.default.database')) {
+        if ($database = $getEnvVar('database.default.database')) {
             $this->default['database'] = $database;
         }
-        if ($dbDriver = env('database.default.DBDriver')) {
+        if ($dbDriver = $getEnvVar('database.default.DBDriver')) {
             $this->default['DBDriver'] = $dbDriver;
         }
-        if ($port = env('database.default.port')) {
+        if ($port = $getEnvVar('database.default.port')) {
             $this->default['port'] = (int) $port;
         }
 
