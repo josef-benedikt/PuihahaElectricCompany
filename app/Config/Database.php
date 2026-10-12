@@ -87,9 +87,10 @@ class Database extends Config
     {
         parent::__construct();
 
-        // Check CodeIgniter env(), $_ENV, or getenv() to support Render variables directly
+        // Helper to evaluate env(), $_ENV, or getenv() directly for Render compatibility
         $getEnvVar = static function (string $key) {
-            return env($key) ?? $_ENV[$key] ?? getenv($key) ?: null;
+            $val = env($key) ?? $_ENV[$key] ?? getenv($key);
+            return ($val !== false && $val !== null && $val !== '') ? $val : null;
         };
 
         if ($hostname = $getEnvVar('database.default.hostname')) {
