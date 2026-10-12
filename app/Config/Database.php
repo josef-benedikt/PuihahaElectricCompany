@@ -83,37 +83,31 @@ class Database extends Config
         ],
     ];
 
-    public function __construct()
-    {
-        parent::__construct();
+   public function __construct()
+{
+    parent::__construct();
 
-        // Helper to evaluate env(), $_ENV, or getenv() directly for Render compatibility
-        $getEnvVar = static function (string $key) {
-            $val = env($key) ?? $_ENV[$key] ?? getenv($key);
-            return ($val !== false && $val !== null && $val !== '') ? $val : null;
-        };
-
-        if ($hostname = $getEnvVar('database.default.hostname')) {
-            $this->default['hostname'] = $hostname;
-        }
-        if ($username = $getEnvVar('database.default.username')) {
-            $this->default['username'] = $username;
-        }
-        if ($password = $getEnvVar('database.default.password')) {
-            $this->default['password'] = $password;
-        }
-        if ($database = $getEnvVar('database.default.database')) {
-            $this->default['database'] = $database;
-        }
-        if ($dbDriver = $getEnvVar('database.default.DBDriver')) {
-            $this->default['DBDriver'] = $dbDriver;
-        }
-        if ($port = $getEnvVar('database.default.port')) {
-            $this->default['port'] = (int) $port;
-        }
-
-        if (ENVIRONMENT === 'testing') {
-            $this->defaultGroup = 'tests';
-        }
+    if ($hostname = env('database.default.hostname')) {
+        $this->default['hostname'] = $hostname;
     }
+    if ($username = env('database.default.username')) {
+        $this->default['username'] = $username;
+    }
+    if ($password = env('database.default.password')) {
+        $this->default['password'] = $password;
+    }
+    if ($database = env('database.default.database')) {
+        $this->default['database'] = $database;
+    }
+    if ($dbDriver = env('database.default.DBDriver')) {
+        $this->default['DBDriver'] = $dbDriver;
+    }
+    if ($port = env('database.default.port')) {
+        $this->default['port'] = (int) $port;
+    }
+
+    if (ENVIRONMENT === 'testing') {
+        $this->defaultGroup = 'tests';
+    }
+}
 }
