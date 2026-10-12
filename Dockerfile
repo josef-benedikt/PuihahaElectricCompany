@@ -15,6 +15,8 @@ RUN composer install --no-dev --optimize-autoloader \
     && chown -R www-data:www-data /app/writable \
     && chmod -R 775 /app/writable
 
-ENV CI_ENVIRONMENT=production
+ENV CI_ENVIRONMENT=development
+
+RUN docker-php-ext-install mysqli pdo pdo_mysql
 
 CMD sh -c "php spark serve --host 0.0.0.0 --port ${PORT:-8080}"
